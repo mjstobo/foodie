@@ -15,7 +15,7 @@ class TileList extends Component {
 
  function printData(locData) {
 
-   let listOfRestuarants;
+   let listOfRestuarants = [];
 
     for(let item in locData.OpenRestaurants){
       listOfRestuarants.push(locData.OpenRestaurants[item])
