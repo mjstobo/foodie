@@ -2,39 +2,15 @@ import React, { Component } from 'react';
 import '../App.css';
 import TileItem from './TileItem';
 
-class TileList extends Component {  
 
-  constructor(props){
-    super(props);
-    this.state = {
-      listData: []
-    }
-  }
+class TileList extends Component {  
 
  componentDidMount(){
 
- function printData(locData) {
-
-   let listOfRestuarants = [];
-
-    for(let item in locData.OpenRestaurants){
-      listOfRestuarants.push(locData.OpenRestaurants[item])
-    };
-  
-    const printedList = listOfRestuarants.map(item => 
-      <TileItem key={item.Id} item={item}></TileItem>
-     )
-  
-    return printedList
-   }
-   
-    this.setState({
-      listData: printData(this.props.listData)
-    })
  }
 
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(nextProps) {
     this.setState({
       listData: nextProps.items
     });
@@ -42,9 +18,7 @@ class TileList extends Component {
 
   render() {
     return (
-        <div className="restaurant-list">
-          {this.state.listData}
-        </div>
+       <div></div>
     );
   }
 }
