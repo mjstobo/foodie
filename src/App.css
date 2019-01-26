@@ -1,11 +1,9 @@
+
 .App {
   max-width: 100%;
-  margin: 2%;
 }
 
 .app-layout {
-  width: 95vw;
-  margin: 1.5%;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -16,37 +14,47 @@
   display: flex;
   flex-flow: column nowrap;
   width: 100%;
+  background-color: #202882;
+
 }
 
 .app-header h1 {
   font-weight: 800;
   font-size: 32px;
   width: 100%;
+  color: white;
+  margin: 1.5%;
+  font-family: 'Avenir', sans-serif;
 }
 
 .app-searchbar {
   align-self: center;
+  align-items: center;
   display: flex;
-  min-width: 85%;
+  width: 100%;
+  background-color: #202882;
+  padding-bottom: 2.5%;
 }
 
 .app-search {
   display: flex;
   align-self: center;
   flex-flow: column;
-  width: 90%;
+  width: 100%;
+
 }
 
-.input {
-  width: 100%;
+ input {
+  width: 85%;
   padding: 10px;
   margin: 1%;
+  margin-left: 5.5%;
 }
 
 html {
   box-sizing: border-box;
   width: 100vw;
-  background: whitesmoke;
+  background: #E6E6E6;
   margin: 0;
   padding: 0;
 }
@@ -63,6 +71,11 @@ body {
   min-width: 80%;
   transition: all 0.3s ease;
 
+}
+
+.app-search__no-results {
+  margin-top: 50px;
+  font-size: 1em;
 }
 
 .list-item {

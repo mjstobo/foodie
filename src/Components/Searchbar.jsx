@@ -1,94 +1,122 @@
-import React, { Component } from 'react';
-import locData from '../list.json';
-import TileItem from './TileItem';
+import React, { Component } from "react";
+import locData from "../list.json";
+import TileItem from "./TileItem";
 
 function printData(locData) {
+  let listOfRestuarants = [];
 
-    let listOfRestuarants = [];
-  
-     for(let item in locData){
-       listOfRestuarants.push(locData[item])
-     };
-   
-     const printedList = listOfRestuarants.map(item => 
-       <TileItem key={item.Id} item={item}></TileItem>
-      )
+  for (let item in locData) {
+    listOfRestuarants.push(locData[item]);
+  }
 
-     return printedList
- }
+  const printedList = listOfRestuarants.map(item => (
+    <TileItem key={item.Id} item={item} />
+  ));
 
-class Searchbar  extends Component {
+  return printedList;
+}
 
-    constructor(props){
-        super(props);
+const checkValues = (searchTerm, value) => {
+  let increment,
+    n = -1;
+  for (let i = 0; (increment = searchTerm[i++]); ) {
+    if (!~(n = value.indexOf(increment, n + 1))) return false;
+  }
+  return true;
+};
 
-        let origData = printData(locData.OpenRestaurants)
-        console.log(origData)
+class Searchbar extends Component {
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            listData: locData.OpenRestaurants,
-            origData: locData.OpenRestaurants,
-            printedData: origData,
-            message: null
+    let origData = printData(locData.OpenRestaurants);
+    console.log(origData);
+
+    this.state = {
+      listData: locData.OpenRestaurants,
+      origData: locData.OpenRestaurants,
+      printedData: origData,
+      message: null
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    let stateData = this.state.origData;
+    let query = e.target.value;
+
+    if (e !== "") {
+      let returnData = stateData.filter(function(result) {
+        let name = result.Name;
+        let cuisines = result.Cuisines;
+        let checkCuisine = false;
+
+        name.toLowerCase();
+        query.toLowerCase();
+
+        for (let val in cuisines) {
+          let cuisineName = cuisines[val].Name;
+          if (!checkCuisine) {
+            checkCuisine = checkValues(query, cuisineName);
+          }
         }
 
-        this.handleChange = this.handleChange.bind(this);
-    }
+        let checkedVal = checkValues(query, name);
 
-    handleChange(e){
-
-        let stateData = this.state.origData;
-        let query = e.target.value;
-
-        let noResults = 'Oops! There is no results'
-
-        if(e !== ""){
-
-        let returnData = stateData.filter(function(result){ 
-            let name = result.Name;
-
-            name.toLowerCase();
-            query.toLowerCase();
-
-            return name.includes(query)
-        });
-
-        if (returnData.length === 0) {
-
-            this.setState({
-                printedData: '',
-                message: noResults
-            })
+        if (checkCuisine) {
+          return true;
+        } else if (checkedVal) {
+          return true;
+        } else {
+          return false;
         }
+      });
+
+      if (returnData.length === 0) {
+        console.log("Return Data is zero, but there are: ");
+        console.log(returnData);
 
         this.setState({
-            printedData:  printData(returnData),
-            message: null
+          printedData: "",
+          message: true
         });
-
-    } else if(e === ""){
-
+      } else {
         this.setState({
-            printedData: printData(stateData),
-            message: null
-        })
-    }
-
-    }
-
-    render() {
-      return (
-     <section className="app-search">
-         <div className="app-searchbar">
-             <input type="text" className="input" onChange={this.handleChange} placeholder="Search..." />
-        </div>  
-
-        <div className="restaurant-list">
-            {(this.state.printedData.length === 0) ? <p className="app-search__no-results">Oops! No results!</p> : this.state.printedData }
-        </div>
-        </section>
-      );
+          printedData: printData(returnData),
+          message: false
+        });
+      }
+    } else if (e === "") {
+      this.setState({
+        printedData: printData(stateData),
+        message: false
+      });
     }
   }
 
-  export default Searchbar
+  render() {
+    return (
+      <section className="app-search">
+        <div className="app-searchbar">
+          <input
+            type="text"
+            className="input"
+            onChange={this.handleChange}
+            placeholder="Search..."
+          />
+        </div>
+
+        <div className="restaurant-list">
+          {this.state.message ? (
+            <p className="app-search__no-results">Oops! No results!</p>
+          ) : (
+            this.state.printedData
+          )}
+        </div>
+      </section>
+    );
+  }
+}
+
+export default Searchbar;
