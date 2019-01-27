@@ -93,12 +93,6 @@ body {
   align-items: center;
 }
 
-.list-item:hover {
-  width: 25.5%;
-  height: 305px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
 
 .list-item h4 {
   width: 100%;
@@ -150,10 +144,65 @@ body {
   align-self: center;
   justify-self: center;
   width: 15%;
+  cursor: pointer;
 }
 
 .list-item__link img {
   width: 50%;
   margin-top: 5px;
   height: auto;
+}
+
+.item-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  transform: translate(-50%,-50%);
+  background-color: whitesmoke;
+  z-index: 1;
+}
+
+.modal-hide {
+  display: none;
+}
+
+.modal-display {
+  display: block;
+}
+
+.item-button {
+  border: none;
+  font: inherit;
+  color: inherit;
+  
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+
+  padding: 1em 1em;
+  width: 30%;
+
+  background: white;
+  color: black;
+  font-weight: 700;
+
+  align-self: center;
+  cursor: pointer;
+  
+  transition: all 0.2s ease;
+}
+
+.item-button:hover {
+  background: black;
+  color: white;
+}
+
+.modal-container {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-flow: column nowrap;
+  margin: 5%;
 }
