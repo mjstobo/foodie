@@ -54,7 +54,7 @@
 html {
   box-sizing: border-box;
   width: 100vw;
-  background: #E6E6E6;
+  background: #eee;
   margin: 0;
   padding: 0;
 }
@@ -80,7 +80,7 @@ body {
 
 .list-item {
   width: 25%;
-  max-width: 25%;
+  max-width: 26%;
   min-height: 250px;
   height: 300px;
   margin: 2%;
@@ -91,6 +91,13 @@ body {
   display: flex;
   flex-flow: column;
   align-items: center;
+}
+
+.list-item:hover {
+  width: 25.5%;
+  height: 305px;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .list-item h4 {
