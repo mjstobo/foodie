@@ -2,19 +2,6 @@ import React, { Component } from "react";
 import locData from "../list.json";
 import TileItem from "./TileItem";
 
-function printData(locData) {
-  let listOfRestuarants = [];
-
-  for (let item in locData) {
-    listOfRestuarants.push(locData[item]);
-  }
-
-  const printedList = listOfRestuarants.map(item => (
-    <TileItem key={item.Id} item={item} />
-  ));
-
-  return printedList;
-}
 
 const checkValues = (searchTerm, value) => {
   let increment,
@@ -25,29 +12,161 @@ const checkValues = (searchTerm, value) => {
   return true;
 };
 
+function onlyUnique(value, index, self){
+  return self.indexOf(value) === index;
+}
+
+
+
 class Searchbar extends Component {
   constructor(props) {
     super(props);
 
-    let origData = printData(locData.OpenRestaurants);
-    console.log(origData);
+    let origData = locData.OpenRestaurants;
 
     this.state = {
       listData: locData.OpenRestaurants,
       origData: locData.OpenRestaurants,
+      filterData: [],
+      cuisineList: this.prepareFilterOptions(locData.OpenRestaurants),
       printedData: origData,
       message: null
     };
 
-    this.handleChange = this.handleChange.bind(this);
+   
+
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleOptionChange = this.handleOptionChange.bind(this);
+    this.printData = this.printData.bind(this);
+    this.searchHandler = this.searchHandler.bind(this);
   }
 
-  handleChange(e) {
-    let stateData = this.state.origData;
-    let query = e.target.value;
+  printData(locData) {
+    let listOfRestuarants = [];
+  
+    for (let item in locData) {
+      listOfRestuarants.push(locData[item]);
+    }
+  
+    const printedList = listOfRestuarants.map(item => (
+      <TileItem key={item.Id} item={item} />
+    ));
+  
+    return printedList;
+  }
 
-    if (e !== "") {
-      let returnData = stateData.filter(function(result) {
+
+  handleOptionChange = (e) => {
+      let filterName = e.target.value
+
+      // get state data
+      let currFilters = this.state.filterData
+
+      // look for current filter
+     if(currFilters.includes(filterName)){
+      for(let index in currFilters){
+        if(currFilters[index] === filterName){
+          currFilters.splice(index, 1)
+        }
+      }
+    } else {
+      currFilters.push(filterName)
+    }
+
+    this.setState({
+      filterData: currFilters
+    })
+
+    let returnData = this.searchHandler('')
+
+    console.log(returnData)
+
+    if (returnData.length === 0) {
+      console.log("return data in optionChange is empty");
+
+      this.setState({
+        printedData: "",
+        message: true
+      });
+    } else {
+      this.setState({
+        printedData: returnData,
+        message: false
+      });
+  }
+
+  }
+
+
+   prepareFilterOptions = (data) => {
+
+    let filteredCuisines = [];
+    let uniqueFilters = [];
+    let returnedFilters = [];
+  
+    for(let item in data){
+  
+      console.log(data[item])
+  
+      let index = data[item]
+  
+      for(let cuisine in index.Cuisines){
+          filteredCuisines.push(index.Cuisines[cuisine].Name)
+      }
+    
+    }
+  
+    uniqueFilters = filteredCuisines.filter(onlyUnique)
+  
+  
+    for(let index in uniqueFilters){
+      returnedFilters.push(
+        <label>{uniqueFilters[index]}
+        <input onClick={this.handleOptionChange}
+            type="checkbox"
+            className="search-filter"
+            value={uniqueFilters[index]}
+            />
+        </label>
+      )
+    }
+    
+    return returnedFilters
+  
+  }
+
+  searchHandler(searchTerm){
+    let filterData = this.state.filterData;
+    let stateData = this.state.origData;
+    let returnData;
+    let query = searchTerm;
+
+
+    if(filterData.length > 0){
+
+      let filteredSearchData = stateData.filter(function(result) {
+        let cuisines = result.Cuisines;
+        let cuisineFlag = false;
+
+        for (let val in cuisines){
+          for(let filter in filterData){
+            console.log(filterData[filter], cuisines[val])
+            if(cuisines[val].Name === filterData[filter]){
+                cuisineFlag = true;
+            }
+          }
+       }
+
+       return cuisineFlag
+
+      })
+
+      stateData = filteredSearchData;
+
+    }
+
+    if (query !== "") {
+      returnData = stateData.filter(function(result) {
         let name = result.Name;
         let cuisines = result.Cuisines;
         let checkCuisine = false;
@@ -73,27 +192,39 @@ class Searchbar extends Component {
         }
       });
 
-      if (returnData.length === 0) {
-        console.log("Return Data is zero, but there are: ");
-        console.log(returnData);
+      return returnData
+  }
 
+  return stateData
+
+}
+
+  handleSearchChange(e) {
+
+    let returnData = this.searchHandler(e.target.value);
+    let stateData = this.state.origData;
+
+      if (returnData.length === 0) {
+        console.log("return data in searchChange is empty");
         this.setState({
           printedData: "",
           message: true
         });
       } else {
         this.setState({
-          printedData: printData(returnData),
+          printedData: returnData,
           message: false
         });
-      }
-    } else if (e === "") {
+    }
+    
+    if (e === "") {
       this.setState({
-        printedData: printData(stateData),
+        printedData: stateData,
         message: false
       });
     }
   }
+
 
   render() {
     return (
@@ -101,17 +232,20 @@ class Searchbar extends Component {
         <div className="app-searchbar">
           <input
             type="text"
-            className="input"
-            onChange={this.handleChange}
+            className="search-input"
+            onChange={this.handleSearchChange}
             placeholder="Search..."
           />
+        </div>
+        <div className="app-search-filters">
+          {this.state.cuisineList}
         </div>
 
         <div className="restaurant-list">
           {this.state.message ? (
             <p className="app-search__no-results">Oops! No results!</p>
           ) : (
-            this.state.printedData
+            this.printData(this.state.printedData)
           )}
         </div>
       </section>

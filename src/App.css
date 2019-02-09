@@ -44,11 +44,30 @@
 
 }
 
- input {
+.search-input {
   width: 85%;
   padding: 10px;
   margin: 1%;
   margin-left: 5.5%;
+}
+
+.app-search-filters {
+  max-width: 90%;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-flow: row wrap;
+  padding: 10px;
+}
+
+label {
+  font-size: 0.8em;
+  margin: 5px;
+}
+
+.search-filter {
+  margin: 5px;
 }
 
 html {
