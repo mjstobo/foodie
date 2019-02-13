@@ -38,7 +38,6 @@ class Searchbar extends Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.printData = this.printData.bind(this);
-    this.searchHandler = this.searchHandler.bind(this);
   }
 
   printData(locData) {
@@ -79,11 +78,7 @@ class Searchbar extends Component {
 
     let returnData = this.searchHandler('')
 
-    console.log(returnData)
-
     if (returnData.length === 0) {
-      console.log("return data in optionChange is empty");
-
       this.setState({
         printedData: "",
         message: true
