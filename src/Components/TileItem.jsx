@@ -43,7 +43,7 @@ class TileItem extends Component {
         <ul className="list-item__cuisine-list">{this.state.cuisines}</ul>
         <button className="link-btn" onClick={this.openModal}>MORE</button>
       </div>
-        <Modal item={this.props.item} show={this.state.showModal} />
+        <Modal item={this.props.item} show={this.state.showModal} onClose={this.hideModal} />
       </div>
     );
   }

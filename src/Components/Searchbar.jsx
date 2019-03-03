@@ -30,27 +30,24 @@ class Searchbar extends Component {
       filterData: [],
       cuisineList: this.prepareFilterOptions(locData.OpenRestaurants),
       printedData: origData,
+      toggleList: false,
       message: null
     };
-
-   
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.printData = this.printData.bind(this);
+    this.showHide = this.showHide.bind(this);
   }
 
   printData(locData) {
     let listOfRestuarants = [];
-  
     for (let item in locData) {
       listOfRestuarants.push(locData[item]);
     }
-  
     const printedList = listOfRestuarants.map(item => (
       <TileItem key={item.Id} item={item} />
     ));
-  
     return printedList;
   }
 
@@ -112,7 +109,6 @@ class Searchbar extends Component {
     }
   
     uniqueFilters = filteredCuisines.filter(onlyUnique)
-  
   
     for(let index in uniqueFilters){
       returnedFilters.push(
@@ -220,8 +216,20 @@ class Searchbar extends Component {
     }
   }
 
+  showHide(event){
+    const toggle = this.state.toggleList
+
+    this.setState({
+      toggleList: !toggle
+    })
+
+    console.log(this.state.toggleList)
+
+  }
+
 
   render() {
+
     return (
       <section className="app-search">
         <div className="app-searchbar">
@@ -233,9 +241,9 @@ class Searchbar extends Component {
           />
         </div>
         <div className="app-search-filters">
-          {this.state.cuisineList}
+        {this.state.toggleList && this.state.cuisineList}
         </div>
-
+        <button className="hide-filter" onClick={this.showHide}>Toggle Filters</button>
         <div className="restaurant-list">
           {this.state.message ? (
             <p className="app-search__no-results">Oops! No results!</p>

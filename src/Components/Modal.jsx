@@ -34,7 +34,8 @@ class Modal extends Component {
   hideModal = () => {
     this.setState({
       showHide: "item-modal modal-hide"
-    });
+    });    
+    this.props.onClose();
   };
 
   componentWillReceiveProps(nextProps) {
