@@ -130,7 +130,7 @@ class Searchbar extends Component {
     let filterData = this.state.filterData;
     let stateData = this.state.origData;
     let returnData;
-    let query = searchTerm;
+    let query = searchTerm.toLowerCase();
 
 
     if(filterData.length > 0){
@@ -158,12 +158,9 @@ class Searchbar extends Component {
 
     if (query !== "") {
       returnData = stateData.filter(function(result) {
-        let name = result.Name;
+        let name = result.Name.toLowerCase();
         let cuisines = result.Cuisines;
         let checkCuisine = false;
-
-        name.toLowerCase();
-        query.toLowerCase();
 
         for (let val in cuisines) {
           let cuisineName = cuisines[val].Name;
