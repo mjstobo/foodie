@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Modal from './Modal';
+import TileDetails from './TileDetails'
 import "../App.css";
 
 
@@ -38,9 +39,11 @@ class TileItem extends Component {
     return ( 
       <div className="list-item">
         <img className="list-item__logo" src={this.props.item.LogoUrl} alt="" />
-        <h4>{this.props.item.Name}</h4>
         <div className="list-item__container">
-        <ul className="list-item__cuisine-list">{this.state.cuisines}</ul>
+        <TileDetails 
+          name={this.props.item.Name}
+          cuisines={this.state.cuisines}
+        />
         <button className="link-btn" onClick={this.openModal}>MORE</button>
       </div>
         <Modal item={this.props.item} show={this.state.showModal} onClose={this.hideModal} />
