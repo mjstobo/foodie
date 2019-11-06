@@ -1,0 +1,143 @@
+.list-item {
+    width: 20%;
+    max-width: 25%;
+    min-height: 250px;
+    height: 17.5%;
+    margin: 2%;
+    list-style: none;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0px 3px 20px 0px rgba(199, 199, 199, 1);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  @media screen and (max-width: 680px) {
+    .list-item {
+      max-width: 70%;
+      width: 70%;
+    }
+  
+    .list-item__container {
+      justify-self: flex-end;
+      margin-bottom: 2.5px;
+    }
+  
+  
+    .list-item__cuisine {
+      font-size: 10px;
+      width: 100%;
+    }
+  
+    .list-item h4 {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  
+  }
+  
+  @media screen and (min-width: 681px) and (max-width: 1200px) {
+    .list-item {
+      max-width: 28.5%;
+      width: 28.5%;
+    }
+  
+    .list-item__container {
+      justify-self: flex-end;
+      margin-bottom: 2.5px;
+    } 
+
+    .link-btn {
+        padding-right: 10px;
+    }
+  
+  }
+  
+  .list-item h4 {
+    width: 100%;
+    font-family: 'Avenir';
+    font-size: 11px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .list-item p {
+    height: 30%;
+  }
+  
+  .list-item__cuisine-list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .list-item__details {
+    padding-left: 3.5%;
+    align-self: flex-end;
+    width: 75%;
+  }
+  
+  
+  .list-item__cuisine {
+    list-style: none;
+    color: grey;
+    display: inline;
+    align-self: flex-start;
+    font-size: 12px;
+  }
+  
+  .list-item__cuisine:after {
+    content: ", ";
+  }
+  
+  .list-item__cuisine:last-child:after {
+    content: ".";
+  }
+  
+  
+  .list-item__logo {
+    width: 55%;
+    height: auto;
+    margin-top: 2.5%;
+  }
+  
+  .list-item__container {
+    display: flex;
+    justify-content: space-between;
+    align-self: flex-end;
+    width: 100%;
+    height: 50px;
+    min-height: 50px;
+    margin-bottom: 5px;
+  }
+
+  .link-btn {
+    border: none;
+    font: inherit;
+    color: inherit;
+  
+    text-align: center;
+    align-self: flex-end;
+    text-decoration: none;
+  
+    background: white;
+    color: grey;
+    font-weight: 500;
+    font-size: 12px;
+  
+    cursor: pointer;
+  
+    padding: 2%;
+    height: 100%;
+    width: 20%;
+  
+    transition: all 0.3s ease;
+  }
+  
+  .link-btn:hover {
+    cursor: pointer;
+    color: black;
+  }

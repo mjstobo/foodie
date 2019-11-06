@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import locData from "../list.json";
-import TileItem from "./TileItem";
+import RestuarantList from "./RestaurantList.jsx";
+import MapView from './MapView.jsx';
 
 
 const checkValues = (searchTerm, value) => {
@@ -31,49 +32,38 @@ class Searchbar extends Component {
       cuisineList: this.prepareFilterOptions(locData.OpenRestaurants),
       printedData: origData,
       toggleList: false,
-      message: null
+      message: null,
+      isList: false
     };
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleOptionChange = this.handleOptionChange.bind(this);
-    this.printData = this.printData.bind(this);
     this.showHide = this.showHide.bind(this);
+    this.toggleView = this.toggleView.bind(this);
   }
 
-  printData(locData) {
-    let listOfRestuarants = [];
-    for (let item in locData) {
-      listOfRestuarants.push(locData[item]);
-    }
-    const printedList = listOfRestuarants.map(item => (
-      <TileItem key={item.Id} item={item} />
-    ));
-    return printedList;
-  }
+  handleOptionChange = e => {
+    let filterName = e.target.value;
 
+    // get state data
+    let currFilters = this.state.filterData;
 
-  handleOptionChange = (e) => {
-      let filterName = e.target.value
-
-      // get state data
-      let currFilters = this.state.filterData
-
-      // look for current filter
-     if(currFilters.includes(filterName)){
-      for(let index in currFilters){
-        if(currFilters[index] === filterName){
-          currFilters.splice(index, 1)
+    // look for current filter
+    if (currFilters.includes(filterName)) {
+      for (let index in currFilters) {
+        if (currFilters[index] === filterName) {
+          currFilters.splice(index, 1);
         }
       }
     } else {
-      currFilters.push(filterName)
+      currFilters.push(filterName);
     }
 
     this.setState({
       filterData: currFilters
-    })
+    });
 
-    let returnData = this.searchHandler('')
+    let returnData = this.searchHandler("");
 
     if (returnData.length === 0) {
       this.setState({
@@ -85,75 +75,66 @@ class Searchbar extends Component {
         printedData: returnData,
         message: false
       });
-  }
+    }
+  };
 
-  }
-
-
-   prepareFilterOptions = (data) => {
-
+  prepareFilterOptions = data => {
     let filteredCuisines = [];
     let uniqueFilters = [];
     let returnedFilters = [];
-  
-    for(let item in data){
-  
-      console.log(data[item])
-  
-      let index = data[item]
-  
-      for(let cuisine in index.Cuisines){
-          filteredCuisines.push(index.Cuisines[cuisine].Name)
+
+    for (let item in data) {
+      console.log(data[item]);
+
+      let index = data[item];
+
+      for (let cuisine in index.Cuisines) {
+        filteredCuisines.push(index.Cuisines[cuisine].Name);
       }
-    
     }
-  
-    uniqueFilters = filteredCuisines.filter(onlyUnique)
-  
-    for(let index in uniqueFilters){
+
+    uniqueFilters = filteredCuisines.filter(onlyUnique);
+
+    for (let index in uniqueFilters) {
       returnedFilters.push(
-        <label>{uniqueFilters[index]}
-        <input onClick={this.handleOptionChange}
+        <label>
+          {uniqueFilters[index]}
+          <input
+            onClick={this.handleOptionChange}
             type="checkbox"
             className="search-filter"
             value={uniqueFilters[index]}
-            />
+          />
         </label>
-      )
+      );
     }
-    
-    return returnedFilters
-  
-  }
 
-  searchHandler(searchTerm){
+    return returnedFilters;
+  };
+
+  searchHandler(searchTerm) {
     let filterData = this.state.filterData;
     let stateData = this.state.origData;
     let returnData;
     let query = searchTerm.toLowerCase();
 
-
-    if(filterData.length > 0){
-
+    if (filterData.length > 0) {
       let filteredSearchData = stateData.filter(function(result) {
         let cuisines = result.Cuisines;
         let cuisineFlag = false;
 
-        for (let val in cuisines){
-          for(let filter in filterData){
-            console.log(filterData[filter], cuisines[val])
-            if(cuisines[val].Name === filterData[filter]){
-                cuisineFlag = true;
+        for (let val in cuisines) {
+          for (let filter in filterData) {
+            if (cuisines[val].Name === filterData[filter]) {
+              cuisineFlag = true;
             }
           }
-       }
+        }
 
-       return cuisineFlag
-
-      })
+        return cuisineFlag;
+      });
 
       stateData = filteredSearchData;
-
     }
 
     if (query !== "") {
@@ -180,31 +161,28 @@ class Searchbar extends Component {
         }
       });
 
-      return returnData
+      return returnData;
+    }
+
+    return stateData;
   }
 
-  return stateData
-
-}
-
   handleSearchChange(e) {
-
     let returnData = this.searchHandler(e.target.value);
     let stateData = this.state.origData;
 
-      if (returnData.length === 0) {
-        console.log("return data in searchChange is empty");
-        this.setState({
-          printedData: "",
-          message: true
-        });
-      } else {
-        this.setState({
-          printedData: returnData,
-          message: false
-        });
+    if (returnData.length === 0) {
+      this.setState({
+        printedData: "",
+        message: true
+      });
+    } else {
+      this.setState({
+        printedData: returnData,
+        message: false
+      });
     }
-    
+
     if (e === "") {
       this.setState({
         printedData: stateData,
@@ -213,20 +191,39 @@ class Searchbar extends Component {
     }
   }
 
-  showHide(event){
-    const toggle = this.state.toggleList
+  toggleMapList = () => {
+    const toggle = this.state.isList;
+
+    this.setState({
+      isList: !toggle
+    });
+  }
+
+  showHide(event) {
+    const toggle = this.state.toggleList;
 
     this.setState({
       toggleList: !toggle
-    })
-
-    console.log(this.state.toggleList)
-
+    });
   }
 
+  toggleView = () => {
+    if(this.state.isList) {
+      return    <RestuarantList
+      printedData={this.state.printedData}
+      message={this.state.message}
+      type={this.state.typeOfList}
+    />
+    } else {
+      console.log('mapview');
+         return <MapView
+          data={this.state.printedData}
+          message={this.state.message}
+        />
+    }
+  }
 
   render() {
-
     return (
       <section className="app-search">
         <div className="app-searchbar">
@@ -238,16 +235,17 @@ class Searchbar extends Component {
           />
         </div>
         <div className="app-search-filters">
-        {this.state.toggleList && this.state.cuisineList}
+          {this.state.toggleList && this.state.cuisineList}
         </div>
-        <button className="hide-filter" onClick={this.showHide}>Toggle Filters</button>
-        <div className="restaurant-list">
-          {this.state.message ? (
-            <p className="app-search__no-results">Oops! No results!</p>
-          ) : (
-            this.printData(this.state.printedData)
-          )}
+        <div className="button-group">
+          <button className="hide-filter" onClick={this.showHide}>
+            Toggle Filters
+          </button>
+          <button className="map-list-toggle" onClick={this.toggleMapList}>
+            Map View
+          </button>
         </div>
+       <this.toggleView />
       </section>
     );
   }

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "../App.css";
 
 let checkShowHide = showHide => {
   return showHide ? "item-modal modal-display" : "item-modal modal-hide";
