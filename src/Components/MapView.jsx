@@ -65,7 +65,7 @@ class MapView  extends Component {
             defaultCenter={this.state.center}
             defaultZoom={this.state.zoom} 
             yesIWantToUseGoogleMapApiInternals
-            bootstrapURLKeys={{ key: 'AIzaSyARG6jifu-xZYbnfsMe1DYQH4wKK9SVRcA' }}
+            bootstrapURLKeys={{ key: '//' }}
            >
 
           {this.printMapData(this.props.data)}
