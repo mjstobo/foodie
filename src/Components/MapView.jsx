@@ -29,6 +29,12 @@ class MapView  extends Component {
     })
   }
 
+  unsetActiveItem = () => {
+    this.setState({
+      activeId: false
+    })
+  }
+
   printMapData(locData) {
     let listOfRestuarants = [];
     let printedList = [];
@@ -44,6 +50,7 @@ class MapView  extends Component {
       text={item.Name} 
       active={(this.state.activeId === item.Id) ? true : false}
       action={this.hoverOverChild}
+      removeHover={this.unsetActiveItem}
       />
       ));
     
@@ -62,6 +69,7 @@ class MapView  extends Component {
       text={item.Name}
       active={(this.state.activeId === item.Id) ? true : false}
       action={this.hoverOverChild}
+      removeHover={this.unsetActiveItem}
       />
     ));
        return printedList;

@@ -10,10 +10,15 @@ class SmallTileItem extends Component {
 
     this.mapCuisinesList = this.mapCuisinesList.bind(this);
     this.hoverOverItem = this.hoverOverItem.bind(this);
+    this.endHover = this.endHover.bind(this);
   }
 
   hoverOverItem = () => {
     this.props.action(this.props.item);
+  }
+
+  endHover = () => {
+    this.props.removeHover()
   }
 
   mapCuisinesList = cuisines => {
@@ -31,6 +36,7 @@ class SmallTileItem extends Component {
       <div 
         className="small-tile" 
         onMouseOver={this.hoverOverItem}
+        onMouseLeave={this.endHover}
         style={{
             background: this.props.active ? 'lightcyan' : 'white'
         }}>

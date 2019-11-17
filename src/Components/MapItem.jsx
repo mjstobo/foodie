@@ -5,10 +5,15 @@ class MapItem extends Component {
   constructor(props){
     super(props)
     this.handleHover = this.handleHover.bind(this);
+    this.endHover = this.endHover.bind(this);
   }
 
   handleHover = () => {
     this.props.action(this.props.item);
+  }
+
+  endHover = () => {
+    this.props.removeHover();
   }
   
 
@@ -28,7 +33,8 @@ class MapItem extends Component {
             transform: "translate(-50%, -50%)",
             background: this.props.active ? 'red' : 'black'
           }}
-          onMouseOver={this.handleHover}>
+          onMouseOver={this.handleHover}
+          onMouseOut={this.endHover}
           >
           <img alt="knife-fork-icon" src={Background}></img>
       </section>
