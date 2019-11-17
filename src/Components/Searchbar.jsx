@@ -239,7 +239,7 @@ class Searchbar extends Component {
             Toggle Filters
           </button>
           <button className="map-list-toggle" onClick={this.toggleMapList}>
-            Map View
+            {this.state.isList ? 'Map View' : 'List View'}
           </button>
         </div>
        <this.toggleView />

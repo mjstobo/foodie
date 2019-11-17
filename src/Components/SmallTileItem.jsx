@@ -5,6 +5,7 @@ class SmallTileItem extends Component {
     super(props);
     this.state = {
       cuisines: this.props.item.Cuisines,
+      showModal: false
     };
 
     this.mapCuisinesList = this.mapCuisinesList.bind(this);
@@ -31,7 +32,7 @@ class SmallTileItem extends Component {
         className="small-tile" 
         onMouseOver={this.hoverOverItem}
         style={{
-            background: this.props.active ? 'grey' : 'blue'
+            background: this.props.active ? 'lightcyan' : 'white'
         }}>
         <p>{this.props.item.Name}</p>
         <ul className="small-tile__cuisines">

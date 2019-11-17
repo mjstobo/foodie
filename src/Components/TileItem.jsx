@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TileDetails from './TileDetails'
+import Modal from "./Modal";
 
 
 class TileItem extends Component {
@@ -44,6 +45,7 @@ class TileItem extends Component {
         />
         <button className="link-btn" onClick={this.openModal}>MORE</button>
       </div>
+      <Modal item={this.props.item} show={this.state.showModal} />
       </div>
     );
   }

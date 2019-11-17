@@ -17,7 +17,7 @@ class MapView  extends Component {
         lat: 51.509865,
         lng: -0.118092
       },
-      zoom: 12.5,
+      zoom: 13,
       activeId: null
     };
 
