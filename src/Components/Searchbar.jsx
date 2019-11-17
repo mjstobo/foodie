@@ -84,10 +84,7 @@ class Searchbar extends Component {
     let returnedFilters = [];
 
     for (let item in data) {
-      console.log(data[item]);
-
       let index = data[item];
-
       for (let cuisine in index.Cuisines) {
         filteredCuisines.push(index.Cuisines[cuisine].Name);
       }

@@ -4,15 +4,15 @@ class SmallTileItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cuisines: this.props.item.Cuisines
+      cuisines: this.props.item.Cuisines,
     };
 
     this.mapCuisinesList = this.mapCuisinesList.bind(this);
     this.hoverOverItem = this.hoverOverItem.bind(this);
   }
 
-  hoverOverItem = item => {
-      
+  hoverOverItem = () => {
+    this.props.action(this.props.item);
   }
 
   mapCuisinesList = cuisines => {
@@ -27,7 +27,12 @@ class SmallTileItem extends Component {
 
   render() {
     return (
-      <div className="small-tile" onMouseOver={() => {this.hoverOverItem(this.props.item)}}>
+      <div 
+        className="small-tile" 
+        onMouseOver={this.hoverOverItem}
+        style={{
+            background: this.props.active ? 'grey' : 'blue'
+        }}>
         <p>{this.props.item.Name}</p>
         <ul className="small-tile__cuisines">
           {this.mapCuisinesList(this.state.cuisines)}

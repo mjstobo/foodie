@@ -2,11 +2,12 @@ foodie
 
 
 todo:
-- Search by categories
-- Search by cuisines
 - Filtering by cuisine
-- add css transitions to tiles being re-rendered on search / filter
-
+- mobile styles for map view
+- push JSON to node app
+- add login
+    - Saved restuarants?
+- Synchronise 'selected' state between map and listing view
 
 Questions / thoughts:
 - Search works, but need to tidy up the No Results logic. Very clumsy at the moment.
