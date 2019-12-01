@@ -43,7 +43,7 @@ class MapItem extends Component {
           >
           <img alt="knife-fork-icon" src={Background}></img>
           <FloatingBalloon 
-            name={this.props.item.Name}
+            item={this.props.item}
             showOrHide={this.props.active}
           />
       </section>
