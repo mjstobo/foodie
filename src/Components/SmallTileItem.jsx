@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Modal from "./Modal";
 
 class SmallTileItem extends Component {
   constructor(props) {
@@ -59,11 +58,6 @@ class SmallTileItem extends Component {
         <ul className="small-tile__cuisines">
           {this.mapCuisinesList(this.state.cuisines)}
         </ul>
-        <Modal
-          item={this.props.item}
-          show={this.state.showModal}
-          hideItemModal={this.hideItemModal}
-        />
       </div>
     );
   }
