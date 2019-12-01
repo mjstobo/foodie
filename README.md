@@ -2,6 +2,12 @@
 
 A ReactJS based application that allows you to search and filter a list of restaurants based in London, UK. 
 
+You can view the project [here](https://mjstobo-foodie.netlify.com). 
+
+Technologies used:
+- React
+- SASS / SCSS
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
