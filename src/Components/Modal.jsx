@@ -1,51 +1,52 @@
 import React, { Component } from "react";
 
-let checkShowHide = showHide => {
-  return showHide ? "item-modal modal-display" : "item-modal modal-hide";
-};
-
-const printAddress = item => {
-  let address = [];
-
-  for (let line in item.Address) {
-    if (line !== "Latitude" && line !== "Longitude") {
-      address.push(<li>{item.Address[line]}</li>);
-    }
-  }
-
-  return address;
-};
 
 class Modal extends Component {
   constructor(props) {
     super(props);
-
-    let showHide = this.props.show;
-
-    let address = printAddress(this.props.item);
+    this.hideItemModal = this.hideModal.bind(this);
+    this.checkshowOrHideStyles = this.checkshowOrHideStyles.bind(this);
+    this.printAddress = this.printAddress.bind(this);
 
     this.state = {
-      showHide: checkShowHide(showHide),
-      address: address
+      showOrHideStyles: this.checkshowOrHideStyles(this.props.show),
+      address: this.printAddress(this.props.item)
     };
   }
 
-  hideModal = () => {
-    this.setState({
-      showHide: "item-modal modal-hide"
-    });    
-    this.props.onClose();
+   printAddress = item => {
+    let address = [];
+  
+    for (let line in item.Address) {
+      if (line !== "Latitude" && line !== "Longitude") {
+        address.push(<li>{item.Address[line]}</li>);
+      }
+    }
+    return address;
   };
 
-  componentWillReceiveProps(nextProps) {
+  checkshowOrHideStyles = showOrHideStyles => {
+    return showOrHideStyles ? "item-modal modal-display" : "item-modal modal-hide";
+  };
+
+  hideModal = () => {
+    this.props.hideItemModal();
     this.setState({
-      showHide: checkShowHide(nextProps.show)
-    });
+      showOrHideStyles: this.checkshowOrHideStyles(false),
+    });    
+  };  
+
+  componentDidUpdate(prevProps){
+    if(prevProps.show !== this.props.show){
+      this.setState({
+        showOrHideStyles: this.checkshowOrHideStyles(this.props.show)
+      })
+    }
   }
 
   render() {
     return (
-      <section className={this.state.showHide}>
+      <section className={this.state.showOrHideStyles}>
         <div className="modal-container">
           <h3>{this.props.item.Name}</h3>
           <ul>{this.state.address}</ul>

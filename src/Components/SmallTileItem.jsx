@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Modal from "./Modal";
 
 class SmallTileItem extends Component {
   constructor(props) {
@@ -11,15 +12,29 @@ class SmallTileItem extends Component {
     this.mapCuisinesList = this.mapCuisinesList.bind(this);
     this.hoverOverItem = this.hoverOverItem.bind(this);
     this.endHover = this.endHover.bind(this);
+    this.hideItemModal = this.hideItemModal.bind(this);
+
   }
 
   hoverOverItem = () => {
     this.props.action(this.props.item);
-  }
+  };
 
   endHover = () => {
-    this.props.removeHover()
-  }
+    this.props.removeHover();
+  };
+
+  openModal = () => {
+    this.setState({
+      showModal: true
+    });
+  };
+
+  hideItemModal = () => {
+    this.setState({
+      showModal: false
+    });
+  };
 
   mapCuisinesList = cuisines => {
     let listOfCuisines = cuisines.map(cuisine => (
@@ -33,17 +48,22 @@ class SmallTileItem extends Component {
 
   render() {
     return (
-      <div 
-        className="small-tile" 
+      <div
+        className="small-tile"
         onMouseOver={this.hoverOverItem}
         onMouseLeave={this.endHover}
-        style={{
-            background: this.props.active ? 'lightcyan' : 'white'
-        }}>
+        onClick={this.openModal}
+        style={{ background: this.props.active ? "lightcyan" : "white" }}
+      >
         <p>{this.props.item.Name}</p>
         <ul className="small-tile__cuisines">
           {this.mapCuisinesList(this.state.cuisines)}
         </ul>
+        <Modal
+          item={this.props.item}
+          show={this.state.showModal}
+          hideItemModal={this.hideItemModal}
+        />
       </div>
     );
   }

@@ -5,7 +5,7 @@
   border-radius: 5px;
   margin: 0.25%;
   padding: 1%;
-  height: 6.5%;
+  height: 7.5%;
   display: flex;
   flex-flow: row;
   align-self: center;
@@ -14,7 +14,8 @@
 }
 
 .small-tile p {
-    font-size: 85%;
+    font-size: 80%;
+    padding-left: 2.5px;
 }
 
 .small-tile__cuisine-item {
@@ -47,6 +48,10 @@
   overflow: scroll;
   display: flex;
   flex-flow: column nowrap;
+
+  @media screen and (max-width: 680px) {
+    display: none;
+  }
 }
 
 .map-view__layout {

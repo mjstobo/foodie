@@ -12,6 +12,7 @@ class TileItem extends Component {
             let listOfCuisines = cuisines.map(cuisine => <li key={cuisine.SeoName} className="list-item__cuisine"> {cuisine.Name}</li>)
             return listOfCuisines;
         }
+        this.hideItemModal = this.hideItemModal.bind(this)
 
         this.state = ({
             cuisines: mapCuisinesList(this.props.item.Cuisines),
@@ -21,13 +22,12 @@ class TileItem extends Component {
 
      openModal = () => {
          console.log("State updated to open modal")
-
         this.setState({
             showModal: true
         })
     }
 
-    hideModal = () => {
+    hideItemModal = () => {
         this.setState({
             showModal: false
         })
@@ -45,7 +45,7 @@ class TileItem extends Component {
         />
         <button className="link-btn" onClick={this.openModal}>MORE</button>
       </div>
-      <Modal item={this.props.item} show={this.state.showModal} />
+      <Modal item={this.props.item} show={this.state.showModal} hideItemModal={this.hideItemModal} />
       </div>
     );
   }

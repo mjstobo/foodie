@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import Background from '../img/dining.png';
+import FloatingBalloon from './FloatingBalloon';
 
 class MapItem extends Component {
   constructor(props){
     super(props)
     this.handleHover = this.handleHover.bind(this);
     this.endHover = this.endHover.bind(this);
+    this.state = {
+    };
   }
 
   handleHover = () => {
@@ -29,14 +32,20 @@ class MapItem extends Component {
             textAlign: "center",
             alignItems: "center",
             justifyContent: "center",
-            borderRadius: "100%",
+            borderRadius: "50%",
             transform: "translate(-50%, -50%)",
-            background: this.props.active ? 'red' : 'black'
+            background: this.props.active ? 'lightgrey' : 'unset',
+            border: this.props.active ? '1px solid black' : 'unset'
           }}
           onMouseOver={this.handleHover}
           onMouseOut={this.endHover}
+          onClick={this.openModal}
           >
           <img alt="knife-fork-icon" src={Background}></img>
+          <FloatingBalloon 
+            name={this.props.item.Name}
+            showOrHide={this.props.active}
+          />
       </section>
     );
   }

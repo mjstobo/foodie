@@ -1,0 +1,21 @@
+.hint-balloon {
+    background-color: white;
+    color: #202882;
+    height: auto;
+    width: auto;
+    min-width: 50px;
+    margin: 2.5px;
+    position: absolute;
+    visibility: hidden;
+    bottom: 40px;
+    transition: background-color 0.5s ease;
+
+    &:hover {
+        background-color: whitesmoke;
+    }
+
+    &.active {
+        visibility: visible;
+    }
+}
+
